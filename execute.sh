@@ -10,25 +10,25 @@ cp skill_data.json skill_data.bak.json
 ./itemdata2gas.py
 
 #/usr/local/bin/grftool data.grf "data\\lua files\\skillinfoz\\skilldescript.lub" > ./export_grf/skilldescript.lub
-#/usr/bin/java -jar ./unluac.jar --rawstring ./export_grf/skilldescript.lub \
+#/usr/bin/java -jar ./unluac/unluac.jar --rawstring ./export_grf/skilldescript.lub \
 # | /usr/bin/iconv -f SHIFT-JIS -t UTF-8 \
 # | /usr/bin/sed "s/¥//g" \
 # > ./export_grf/skilldescript.lua
 
 #/usr/local/bin/grftool data.grf "data\\lua files\\skillinfoz\\skillid.lub" > ./export_grf/skillid.lub
-#/usr/bin/java -jar ./unluac.jar --rawstring ./export_grf/skillid.lub \
+#/usr/bin/java -jar ./unluac/unluac.jar --rawstring ./export_grf/skillid.lub \
 # | /usr/bin/iconv -f SHIFT-JIS -t UTF-8 \
 # | /usr/bin/sed "s/¥//g" \
 # > ./export_grf/skillid.lua
 
 /usr/local/bin/grftool data.grf "data\\lua files\\skillinfoz\\skillinfolist.lub" > ./export_grf/skillinfolist.lub
-#/usr/bin/java -jar ./unluac.jar --rawstring ./export_grf/skillinfolist.lub \
+#/usr/bin/java -jar ./unluac/unluac.jar --rawstring ./export_grf/skillinfolist.lub \
 # | /usr/bin/iconv -f SHIFT-JIS -t UTF-8 \
 # | /usr/bin/sed "s/¥//g" \
 # > ./export_grf/skillinfolist.lua
 
 /usr/local/bin/grftool data.grf "data\\lua files\\skillinfoz\\skillnamelist.lub" > ./export_grf/skillnamelist.lub
-/usr/bin/java -jar ./unluac.jar --rawstring ./export_grf/skillnamelist.lub \
+/usr/bin/java -jar ./unluac/unluac.jar --rawstring ./export_grf/skillnamelist.lub \
  | /usr/bin/iconv -f SHIFT-JIS -t UTF-8 \
  | /usr/bin/sed "s/¥//g" \
  > ./export_grf/skillnamelist.lua
