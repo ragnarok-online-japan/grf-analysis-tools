@@ -1,0 +1,5 @@
+gspread
+google
+python-dotenv
+Pillow
+luaparser
