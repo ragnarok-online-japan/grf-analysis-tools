@@ -9,12 +9,6 @@ cp skill_list.json skill_list.bak.json
 ./itemdata2json.py
 ./itemdata2gas.py
 
-#/usr/local/bin/grftool data.grf "datadata\\luafiles514\\lua files\\skillinfoz\\skilldescript.lub" > ./export_grf/skilldescript.lub
-#/usr/bin/java -jar ./unluac/unluac.jar --rawstring ./export_grf/skilldescript.lub \
-# | /usr/bin/iconv -f SHIFT-JIS -t UTF-8 \
-# | /usr/bin/sed "s/¥//g" \
-# > ./export_grf/skilldescript.lua
-
 /usr/local/bin/grftool data.grf "data\\luafiles514\\lua files\\skillinfoz\\skillinfolist.lub" > ./export_grf/skillinfolist.lub
 /usr/bin/java -jar ./unluac/unluac.jar --rawstring ./export_grf/skillinfolist.lub \
  | /usr/bin/iconv -f SHIFT-JIS -t UTF-8 \
@@ -28,7 +22,7 @@ cp skill_list.json skill_list.bak.json
  > ./export_grf/skillid.lua
 
 ./lua_skillinfo2json.py
-cp -p skill_list.json /var/www/html/ROOD/
+cp -p skill_list.json /var/www/html_rodb/simulator/data/
 
 #cat items.json | jq '.[] | select(.is_enchant == true)' \
 #> /var/www/html/ROOD/enchants.json
