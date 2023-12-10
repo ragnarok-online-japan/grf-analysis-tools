@@ -21,6 +21,8 @@ args = parser.parse_args()
 def main(args:dict):
     skill_dict: dict = {}
 
+    ###############################################################################################
+
     filename: str = "skillinfolist.lua"
     lua_data: str = ""
     with open(os.path.abspath("{:}/{:}".format(args.import_path, filename)), "r", encoding="utf-8") as fp:
@@ -98,8 +100,10 @@ def main(args:dict):
 
             skill_dict[skill_id]["id_num"] = skill_id_num
 
+    ###############################################################################################
+
     with open(os.path.abspath("./skill_list.json"), "w", encoding="utf-8") as fp:
-        fp.write(json.dumps(skill_dict, sort_keys=True,ensure_ascii=False, indent=4))
+        fp.write(json.dumps(skill_dict, sort_keys=True, ensure_ascii=False, indent=4))
 
 if __name__ == "__main__":
     main(args)
