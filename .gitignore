@@ -165,4 +165,4 @@ export_grf/*
 service_account.json
 
 items.json
-skill_data.json
+skill_info_list.json
