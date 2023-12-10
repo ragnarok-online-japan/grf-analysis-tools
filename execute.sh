@@ -2,7 +2,7 @@
 cd /opt/grf-analysis-tools
 
 cp items.json items.bak.json
-cp skill_info_list.json skill_info_list.bak.json
+cp skill_list.json skill_list.bak.json
 
 ./export_grf.py
 ./export_grf2itemimg.py --export-path-imgdir /var/www/html_rodb/ROOD/items/
@@ -28,7 +28,7 @@ cp skill_info_list.json skill_info_list.bak.json
  > ./export_grf/skillid.lua
 
 ./lua_skillinfo2json.py
-cp -p skill_info_list.json /var/www/html/ROOD/
+cp -p skill_list.json /var/www/html/ROOD/
 
 #cat items.json | jq '.[] | select(.is_enchant == true)' \
 #> /var/www/html/ROOD/enchants.json

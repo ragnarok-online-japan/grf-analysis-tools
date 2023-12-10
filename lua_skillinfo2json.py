@@ -98,7 +98,7 @@ def main(args:dict):
 
             skill_dict[skill_id]["id_num"] = skill_id_num
 
-    with open(os.path.abspath("./skill_info_list.json"), "w", encoding="utf-8") as fp:
+    with open(os.path.abspath("./skill_list.json"), "w", encoding="utf-8") as fp:
         fp.write(json.dumps(skill_dict, sort_keys=True,ensure_ascii=False, indent=4))
 
 if __name__ == "__main__":
