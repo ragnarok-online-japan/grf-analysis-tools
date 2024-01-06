@@ -165,4 +165,6 @@ export_grf/*
 service_account.json
 
 items.json
+items.yaml
 skill_list.json
+skill_list.yaml

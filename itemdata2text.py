@@ -5,6 +5,8 @@ import json
 import os
 import re
 
+import yaml
+
 parser = argparse.ArgumentParser(description="")
 
 parser.add_argument("--import-path",
@@ -63,7 +65,7 @@ def main(args:dict):
             if item_id is not None:
                 line = re.sub(r"\^000000", "</span>", line)
                 line = re.sub(r"\^([0-9a-fA-F]{6})", r'<span style="color:#\1">', line)
-                items[item_id]["description"] = items[item_id]["description"] + line + "\n"
+                items[item_id]["description"] = items[item_id]["description"] + f"{line}\n"
 
     filename = "idnum2itemresnametable.txt"
     print("import", filename)
@@ -143,6 +145,8 @@ def main(args:dict):
     pattern_position  = re.compile(r"位置\s*:\s*<.+?>(.+?)</")
     pattern_slot      = re.compile(r"スロット\s*:\s*<.+?>([0-9]+)</")
     for item in items.values():
+        item["description"] = item["description"].rstrip()
+
         match = pattern_type.search(item["description"])
         if match:
             item["type"] = match.group(1)
@@ -168,9 +172,14 @@ def main(args:dict):
     #/////////////////////////////////////////////////////////////////////////
 
     filename = "items.json"
-    print("export", filename)
-    with open("{:}".format(filename), "w", encoding="utf-8") as fp:
-        json.dump(items, fp, sort_keys=True, ensure_ascii=False, indent=2)
+    print("export :", filename)
+    with open(os.path.abspath(filename), "w", encoding="utf-8") as fp:
+        json.dump(items, fp, sort_keys=True, ensure_ascii=False, indent=4)
+
+    filename = "items.yaml"
+    print("export :", filename)
+    with open(os.path.abspath(filename), "w", encoding="utf-8") as fp:
+        yaml.dump(items, fp, sort_keys=True, allow_unicode=True, indent=4)
 
 if __name__ == "__main__":
     main(args)

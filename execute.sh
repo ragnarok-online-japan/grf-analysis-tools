@@ -1,16 +1,12 @@
 #!/bin/bash
 cd /opt/grf-analysis-tools
 
-cp items.json items.bak.json
-cp skill_list.json skill_list.bak.json
-
 ./export_grf.py
-./export_grf2itemimg.py --export-path-imgdir /var/www/html_rodb/ROOD/items/
+./export_grf2itemimg.py --export-path-imgdir /var/www/html/ROOD/items/
 
-
-./itemdata2json.py
-cp -p items.json /var/www/html_rodb/ROOD/
-
+./itemdata2text.py
+cp -p items.json /var/www/html/ROOD/
+cp -p items.yaml /var/www/html/ROOD/
 
 /usr/local/bin/grftool data.grf "data\\luafiles514\\lua files\\skillinfoz\\skillinfolist.lub" > ./export_grf/skillinfolist.lub
 /usr/bin/java -jar ./unluac/unluac.jar --rawstring ./export_grf/skillinfolist.lub \
@@ -24,8 +20,9 @@ cp -p items.json /var/www/html_rodb/ROOD/
  | /usr/bin/sed "s/¥//g" \
  > ./export_grf/skillid.lua
 
-./lua_skillinfo2json.py
-cp -p skill_list.json /var/www/html_rodb/simulator/data/
+./lua_skillinfo2text.py
+cp -p skill_list.json /var/www/html/simulator/data/
+cp -p skill_list.yaml /var/www/html/simulator/data/
 
 ./itemdata2gas.py
 

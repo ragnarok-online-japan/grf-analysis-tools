@@ -3,9 +3,9 @@
 import argparse
 import json
 import os
-import re
 
 from luaparser import ast, astnodes
+import yaml
 
 parser = argparse.ArgumentParser(description="")
 
@@ -102,8 +102,15 @@ def main(args:dict):
 
     ###############################################################################################
 
-    with open(os.path.abspath("./skill_list.json"), "w", encoding="utf-8") as fp:
-        fp.write(json.dumps(skill_dict, sort_keys=True, ensure_ascii=False, indent=4))
+    filename = "skill_list.json"
+    print("export :", filename)
+    with open(os.path.abspath(filename), "w", encoding="utf-8") as fp:
+        json.dump(skill_dict, fp, sort_keys=True, ensure_ascii=False, indent=4)
+
+    filename = "skill_list.yaml"
+    print("export :", filename)
+    with open(os.path.abspath(filename), "w", encoding="utf-8") as fp:
+        yaml.dump(skill_dict, fp, sort_keys=True, allow_unicode=True, indent=4)
 
 if __name__ == "__main__":
     main(args)
