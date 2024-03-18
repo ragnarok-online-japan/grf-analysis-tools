@@ -115,13 +115,9 @@ def main(args:dict):
             wb = gc.create(wb_name, folder_id=args.drive_folder_id)
 
         existing_spreadsheet = [sheet.title for sheet in wb.worksheets()]
-        if ws_name in existing_spreadsheet:
-            if f"{ws_name}.old" in existing_spreadsheet:
-                # .old があれば削除
-                wb.del_worksheet(wb.worksheet(f"{ws_name}.old"))
-            elif f"{ws_name}.new" in existing_spreadsheet:
-                # .new があれば削除
-                wb.del_worksheet(wb.worksheet(f"{ws_name}.new"))
+        if f"{ws_name}.new" in existing_spreadsheet:
+            # .new があれば削除
+            wb.del_worksheet(wb.worksheet(f"{ws_name}.new"))
 
         rows: list = list(items.values())
         keys: list = list(rows[0].keys())
