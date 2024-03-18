@@ -119,9 +119,11 @@ def main(args:dict):
         existing_spreadsheet = [sheet.title for sheet in wb.worksheets()]
         if ws_name in existing_spreadsheet:
             if f"{ws_name}.old" in existing_spreadsheet:
-                # items.old があれば削除
+                # .old があれば削除
                 wb.del_worksheet(wb.worksheet(f"{ws_name}.old"))
-            wb.worksheet(ws_name).update_title(f"{ws_name}.old")
+            elif f"{ws_name}.new" in existing_spreadsheet:
+                # .new があれば削除
+                wb.del_worksheet(wb.worksheet(f"{ws_name}.new"))
 
         rows: list = list(items.values())
         keys: list = list(rows[0].keys())
@@ -130,9 +132,9 @@ def main(args:dict):
         count_row: int = len(rows) + 1 #+1=header
         count_col: int = len(keys)
 
-        # 毎回作り直す
-        print("[INFO]", f"Create sheet {ws_name}...")
-        ws = wb.add_worksheet(title=ws_name, rows=count_row, cols=count_col)
+        # 毎回.newを作る
+        print("[INFO]", f"Create sheet {ws_name}.new ...")
+        ws = wb.add_worksheet(title=f"{ws_name}.new", rows=count_row, cols=count_col)
 
         ws.append_row(keys)
         ws.append_rows(rows)
@@ -141,9 +143,16 @@ def main(args:dict):
             # Sheet1 があれば削除
             wb.del_worksheet(wb.worksheet("Sheet1"))
 
-        # renameしたものを削除
         try:
-            wb.del_worksheet(wb.worksheet(f"{ws_name}.old"))
+            # 過去分を削除
+            wb.del_worksheet(wb.worksheet(f"{ws_name}"))
+        except gspread.exceptions.WorksheetNotFound:
+            # ignore
+            pass
+
+        try:
+            # .newをrename
+            wb.worksheet(f"{ws_name}.new").update_title(ws_name)
         except gspread.exceptions.WorksheetNotFound:
             # ignore
             pass
