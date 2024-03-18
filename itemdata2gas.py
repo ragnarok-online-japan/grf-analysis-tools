@@ -5,8 +5,6 @@ import os
 import re
 
 from google.oauth2.service_account import Credentials
-from googleapiclient.http import HttpError
-from gspread.client import APIError
 import gspread
 
 parser = argparse.ArgumentParser(description="")
