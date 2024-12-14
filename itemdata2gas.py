@@ -115,9 +115,13 @@ def main(args:dict):
             wb = gc.create(wb_name, folder_id=args.drive_folder_id)
 
         existing_spreadsheet = [sheet.title for sheet in wb.worksheets()]
-        if f"{ws_name}.new" in existing_spreadsheet:
-            # .new があれば削除
-            wb.del_worksheet(wb.worksheet(f"{ws_name}.new"))
+        if len(wb.worksheets()) == 1 and f"{ws_name}.new" in existing_spreadsheet:
+            # .newをrename
+            wb.worksheet(f"{ws_name}.new").update_title("Sheet1")
+        else:
+            if f"{ws_name}.new" in existing_spreadsheet:
+                # .new があれば削除
+                wb.del_worksheet(wb.worksheet(f"{ws_name}.new"))
 
         rows: list = list(items.values())
         keys: list = list(rows[0].keys())
