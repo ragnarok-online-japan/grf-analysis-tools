@@ -6,6 +6,7 @@ import os
 import re
 
 import yaml
+import polars as pl
 
 parser = argparse.ArgumentParser(description="")
 
@@ -57,7 +58,7 @@ def main(args:dict):
                 item_id = None
                 continue
 
-            matches = re.match("^(\d+)#$", line)
+            matches = re.match("^([0-9]+)#$", line)
             if matches and int(matches[1]) in items:
                 item_id = int(matches[1])
                 continue
@@ -175,6 +176,25 @@ def main(args:dict):
     print("export :", filename)
     with open(os.path.abspath(filename), "w", encoding="utf-8") as fp:
         json.dump(items, fp, sort_keys=True, ensure_ascii=False, indent=4)
+
+    filename = "items.jsonl"
+    print("export :", filename)
+    records = []
+    for key, value in items.items():
+        value = value.copy()
+        value["id"] = int(key)
+        records.append(value)
+    schema: dict = {
+        "id": pl.Int32,
+        "displayname": pl.Utf8,
+        "description": pl.Utf8,
+        "is_card": pl.Boolean,
+        "is_enchant": pl.Boolean,
+        "resname": pl.Utf8,
+        "type": pl.Utf8,  # None or str
+    }
+    df = pl.from_dicts(records, schema=schema).sort("id")
+    df.write_ndjson(filename)
 
     filename = "items.yaml"
     print("export :", filename)

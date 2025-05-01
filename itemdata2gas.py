@@ -17,7 +17,7 @@ parser.add_argument("--import-path",
                     type=str,
                     help="import path")
 
-parser.add_argument("--drive_folder_id",
+parser.add_argument("--drive-folder-id",
                     action="store",
                     default="1QPCxW-dJ1OJ4nCpfE4AZ1m_kMc9P-wRC",
                     type=str,

@@ -166,8 +166,8 @@ export_img/
 service_account.json
 
 items.json
+items.jsonl
 items.yaml
 skill_list.json
+skill_list.jsonl
 skill_list.yaml
-
-

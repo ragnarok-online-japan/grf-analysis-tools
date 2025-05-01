@@ -3,3 +3,4 @@ google
 python-dotenv
 Pillow
 luaparser
+polars
