@@ -10,7 +10,7 @@ parser = argparse.ArgumentParser(description="")
 parser.add_argument("--grftool",
                     action="store",
                     nargs=1,
-                    default="./pygrf/grftool.py",
+                    default="../pygrf/grftool.py",
                     type=str,
                     help="grftool.py path")
 
