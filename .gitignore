@@ -160,7 +160,8 @@ cython_debug/
 #.idea/
 
 data.grf
-export_grf/*
+export_grf/
+export_img/
 *.bak.json
 service_account.json
 
@@ -168,3 +169,5 @@ items.json
 items.yaml
 skill_list.json
 skill_list.yaml
+
+
