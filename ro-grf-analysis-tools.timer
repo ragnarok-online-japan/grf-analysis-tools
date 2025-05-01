@@ -1,0 +1,9 @@
+[Unit]
+Description=Timer for GRF Analysis tools
+
+[Timer]
+OnCalendar=*-*-* 20:00:00
+Persistent=false
+
+[Install]
+WantedBy=timers.target

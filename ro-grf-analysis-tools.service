@@ -1,0 +1,10 @@
+[Unit]
+Description=GRF Analysis tools
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/grf-analysis-tools
+ExecStart=bash execute.sh
+
+[Install]
+WantedBy=default.target
