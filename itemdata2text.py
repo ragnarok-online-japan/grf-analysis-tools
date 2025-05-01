@@ -26,14 +26,14 @@ def main(args:dict):
     items = {}
 
     filename = "idnum2itemdisplaynametable.txt"
-    print("import", filename)
+    print("[INFO]", "import:", filename)
     with open("{:}/{:}".format(args.import_path, filename), "r", encoding="utf-8") as fp:
         for line in fp:
             line = line.rstrip()
             if re.match(r"^//.*", line):
                 continue
 
-            matches = re.match(r"^(\d+)#(.+)#$", line)
+            matches = re.match(r"^([0-9]+)#(.+)#$", line)
             if matches:
                 item_id = int(matches[1])
                 items[item_id] = {
@@ -47,7 +47,7 @@ def main(args:dict):
                 }
 
     filename = "idnum2itemdesctable.txt"
-    print("import", filename)
+    print("[INFO]", "import:", filename)
     item_id = None
     with open("{:}/{:}".format(args.import_path, filename), "r", encoding="utf-8") as fp:
         for line in fp:
@@ -58,7 +58,7 @@ def main(args:dict):
                 item_id = None
                 continue
 
-            matches = re.match("^([0-9]+)#$", line)
+            matches = re.match(r"^([0-9]+)#$", line)
             if matches and int(matches[1]) in items:
                 item_id = int(matches[1])
                 continue
@@ -69,7 +69,7 @@ def main(args:dict):
                 items[item_id]["description"] = items[item_id]["description"] + f"{line}\n"
 
     filename = "idnum2itemresnametable.txt"
-    print("import", filename)
+    print("[INFO]", "import:", filename)
     with open("{:}/{:}".format(args.import_path, filename), "r", encoding="utf-8") as fp:
         for line in fp:
             line = line.rstrip()
@@ -79,14 +79,14 @@ def main(args:dict):
                 item_id = None
                 continue
 
-            matches = re.match(r"^(\d+)#([^#]+)#$", line)
+            matches = re.match(r"^([0-9]+)#([^#]+)#$", line)
             if matches and int(matches[1]) in items:
                 item_id = int(matches[1])
 
                 items[item_id]["resname"] = matches[2]
 
     filename = "num2cardillustnametable.txt"
-    print("import", filename)
+    print("[INFO]", "import:", filename)
     with open("{:}/{:}".format(args.import_path, filename), "r", encoding="utf-8") as fp:
         for line in fp:
             line = line.rstrip()
@@ -96,21 +96,21 @@ def main(args:dict):
                 item_id = None
                 continue
 
-            matches = re.match(r"^(\d+)#([^#]+)#$", line)
+            matches = re.match(r"^([0-9]+)#([^#]+)#$", line)
             if matches and int(matches[1]) in items:
                 item_id = int(matches[1])
 
                 items[item_id]["cardillustname"] = matches[2]
 
     filename = "cardprefixnametable.txt"
-    print("import", filename)
+    print("[INFO]", "import:", filename)
     with open("{:}/{:}".format(args.import_path, filename), "r", encoding="utf-8") as fp:
         for line in fp:
             line = line.rstrip()
             if re.match(r"^//.*", line):
                 continue
 
-            matches = re.match(r"^(\d+)#(.+)#$", line)
+            matches = re.match(r"^([0-9]+)#(.+)#$", line)
             if matches and int(matches[1]) in items:
                 item_id = int(matches[1])
 
@@ -127,14 +127,14 @@ def main(args:dict):
                 }
 
     filename = "cardpostfixnametable.txt"
-    print("import", filename)
+    print("[INFO]", "import:", filename)
     with open("{:}/{:}".format(args.import_path, filename), "r", encoding="utf-8") as fp:
         for line in fp:
             line = line.rstrip()
             if re.match(r"^//.*", line):
                 continue
 
-            matches = re.match(r"^(\d+)#", line)
+            matches = re.match(r"^([0-9]+)#", line)
             if matches and int(matches[1]) in items:
                 item_id = int(matches[1])
 

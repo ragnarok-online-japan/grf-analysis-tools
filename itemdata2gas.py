@@ -32,14 +32,14 @@ def main(args:dict):
     items = {}
 
     filename = "idnum2itemdisplaynametable.txt"
-    print("import", filename)
+    print("[INFO]", "import:", filename)
     with open("{:}/{:}".format(args.import_path, filename), "r", encoding="utf-8") as fp:
         for line in fp:
             line = line.rstrip()
             if re.match(r"^//.*", line):
                 continue
 
-            matches = re.match(r"^(\d+)#(.+)#$", line)
+            matches = re.match(r"^([0-9]+)#(.+)#$", line)
             if matches:
                 item_id = int(matches[1])
                 items[item_id] = {
@@ -51,7 +51,7 @@ def main(args:dict):
                 }
 
     filename = "idnum2itemdesctable.txt"
-    print("import", filename)
+    print("[INFO]", "import:", filename)
     item_id = None
     with open("{:}/{:}".format(args.import_path, filename), "r", encoding="utf-8") as fp:
         for line in fp:
