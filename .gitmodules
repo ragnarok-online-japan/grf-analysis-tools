@@ -1,0 +1,3 @@
+[submodule "pygrf"]
+	path = pygrf
+	url = https://github.com/ragnarok-online-japan/pygrf
