@@ -1,15 +1,16 @@
 #!/bin/bash
 cd /opt/grf-analysis-tools
 
-./export_grf2text.py
-./export_grf2itemimg.py --export-path-imgdir /var/www/html/ROOD/items/
+./export_grf2text.py --grf-path /opt/grf-files/data.grf
 
-./itemdata2text.py
+./itemdata2text.py 
 cp -p items.json /var/www/html/ROOD/
 cp -p items.jsonl /var/www/html/ROOD/
 cp -p items.yaml /var/www/html/ROOD/
 
 ./itemdata2gas.py
+
+./export_grf2itemimg.py --grf-path /opt/grf-files/data.grf --export-path-imgdir /var/www/html/ROOD/items/
 
 #./pygrf/grftool.py ../grf-files/data.grf "data/luafiles514/lua files/skillinfoz/skillinfolist.lub" > ./export_grf/skillinfolist.lub
 #/usr/bin/java -jar ./unluac/unluac.jar --rawstring ./export_grf/skillinfolist.lub \
