@@ -5,10 +5,6 @@ import os
 import subprocess
 import sys
 
-from dotenv import load_dotenv
-
-load_dotenv()
-
 parser = argparse.ArgumentParser(description="")
 
 parser.add_argument("--grftool",
