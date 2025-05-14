@@ -164,10 +164,4 @@ export_grf/
 export_img/
 *.bak.json
 service_account.json
-
-items.json
-items.jsonl
-items.yaml
-skill_list.json
-skill_list.jsonl
-skill_list.yaml
+*.jsonl

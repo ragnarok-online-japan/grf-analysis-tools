@@ -1,11 +1,10 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.13
 
 import argparse
-import json
 import os
 
 from luaparser import ast, astnodes
-import yaml
+import polars as pl
 
 parser = argparse.ArgumentParser(description="")
 
@@ -102,15 +101,22 @@ def main(args:dict):
 
     ###############################################################################################
 
-    filename = "skill_list.json"
+    filename = "skills.jsonl"
     print("export :", filename)
-    with open(os.path.abspath(filename), "w", encoding="utf-8") as fp:
-        json.dump(skill_dict, fp, sort_keys=True, ensure_ascii=False, indent=4)
-
-    filename = "skill_list.yaml"
-    print("export :", filename)
-    with open(os.path.abspath(filename), "w", encoding="utf-8") as fp:
-        yaml.dump(skill_dict, fp, sort_keys=True, allow_unicode=True, indent=4)
+    records = []
+    utf8_fields = {"id", "name", "type", "sp_amount", "attack_range", "need_skill_list"}
+    for key, value in skill_dict.items():
+        value = value.copy()
+        value["id"] = key
+        for field in utf8_fields:
+            if field in value:
+                if value[field] is None:
+                     value[field] = ""
+                elif not isinstance(value[field], str):
+                     value[field] = str(value[field])
+        records.append(value)
+    df = pl.from_dicts(records).sort("id_num")
+    df.write_ndjson(filename)
 
 if __name__ == "__main__":
     main(args)
