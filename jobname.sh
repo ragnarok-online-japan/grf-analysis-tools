@@ -7,4 +7,10 @@ cd /opt/grf-analysis-tools
  | /usr/bin/sed "s/¥//g" \
  > ./export_grf/pcjobname.lua
 
+../pygrf/grftool.py ../grf-files/data.grf "data/luafiles514/lua files/skillinfo/jobinheritlist.lub" > ./export_grf/jobinheritlist.lub
+/usr/bin/java -jar ./unluac/unluac.jar --rawstring ./export_grf/jobinheritlist.lub \
+ | /usr/bin/iconv -f SHIFT-JIS -t UTF-8 \
+ | /usr/bin/sed "s/¥//g" \
+ > ./export_grf/jobinheritlist.lua
+
 ./jobname2text.py > /dev/null
