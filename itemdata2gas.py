@@ -62,7 +62,7 @@ def main(args:dict):
                 item_id = None
                 continue
 
-            matches = re.match("^(\d+)#$", line)
+            matches = re.match(r"^(\d+)#$", line)
             if matches and int(matches[1]) in items:
                 item_id = int(matches[1])
                 continue
