@@ -172,10 +172,10 @@ def main(args:dict):
 
     #/////////////////////////////////////////////////////////////////////////
 
-    filename = "items.json"
-    print("export :", filename)
-    with open(os.path.abspath(filename), "w", encoding="utf-8") as fp:
-        json.dump(items, fp, sort_keys=True, ensure_ascii=False, indent=4)
+    #filename = "items.json"
+    #print("export :", filename)
+    #with open(os.path.abspath(filename), "w", encoding="utf-8") as fp:
+    #    json.dump(items, fp, sort_keys=True, ensure_ascii=False, indent=4)
 
     filename = "items.jsonl"
     print("export :", filename)
@@ -196,10 +196,10 @@ def main(args:dict):
     df = pl.from_dicts(records, schema=schema).sort("id")
     df.write_ndjson(filename)
 
-    filename = "items.yaml"
-    print("export :", filename)
-    with open(os.path.abspath(filename), "w", encoding="utf-8") as fp:
-        yaml.dump(items, fp, sort_keys=True, allow_unicode=True, indent=4)
+    #filename = "items.yaml"
+    #print("export :", filename)
+    #with open(os.path.abspath(filename), "w", encoding="utf-8") as fp:
+    #    yaml.dump(items, fp, sort_keys=True, allow_unicode=True, indent=4)
 
 if __name__ == "__main__":
     main(args)
