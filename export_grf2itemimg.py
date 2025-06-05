@@ -130,7 +130,6 @@ def main(args):
                 export_image(cmd, export_filename)
 
 def export_image(cmd: list, export_filename):
-    print(cmd)
     subp = subprocess.run(cmd, capture_output=True)
     image_bytes: bytes = subp.stdout
 
