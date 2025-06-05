@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.13
 
 import argparse
+import json
 import os
 
 from luaparser import ast, astnodes
@@ -17,7 +18,7 @@ parser.add_argument("--import-path",
 
 args = parser.parse_args()
 
-def main(args:dict):
+def main(args: argparse.Namespace):
     job_dict: dict = {}
 
     ###############################################################################################
@@ -29,10 +30,10 @@ def main(args:dict):
 
     tree = ast.parse(lua_data)
 
-    for job_field in tree.body.body[0].values[0].fields:
+    for job_field in tree.body.body[0].values[0].fields: # type: ignore
         if isinstance(job_field, astnodes.Field):
-            id: str = job_field.key.idx.id
-            name: str = job_field.value.s
+            id: str = job_field.key.idx.id # type: ignore
+            name: str = job_field.value.s # type: ignore
             job_dict[id] = {
                 "id": id,
                 "name": name,
@@ -48,17 +49,17 @@ def main(args:dict):
 
     tree = ast.parse(lua_data)
 
-    for job_field in tree.body.body[0].values[0].fields:
+    for job_field in tree.body.body[0].values[0].fields: # type: ignore
         if isinstance(job_field, astnodes.Field):
-            name: str = job_field.key.id
-            id_num: str = job_field.value.n
+            name: str = job_field.key.id # type: ignore
+            id_num: str = job_field.value.n # type: ignore
 
             if name in job_dict:
                 job_dict[name]["id_num"] = id_num
 
     ###############################################################################################
 
-    filename = "jobname.jsonl"
+    filename = "jobname.json"
     print("export :", filename)
     records = []
     utf8_fields = {"id", "name"}
@@ -71,8 +72,9 @@ def main(args:dict):
                 elif not isinstance(value[field], str):
                      value[field] = str(value[field])
         records.append(value)
-    df = pl.from_dicts(records)
-    df.write_ndjson(filename)
+
+    with open(os.path.abspath(filename), "w", encoding="utf-8") as fp:
+        json.dump(records, fp, sort_keys=True, ensure_ascii=False, indent=4)
 
 if __name__ == "__main__":
     main(args)

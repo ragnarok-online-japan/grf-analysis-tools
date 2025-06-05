@@ -28,7 +28,7 @@ parser.add_argument("--export-path",
 
 args = parser.parse_args()
 
-def main(args:dict):
+def main(args: argparse.Namespace):
     export_datas = {
         "carditemnametable.txt": {
             "path":"data/carditemnametable.txt",

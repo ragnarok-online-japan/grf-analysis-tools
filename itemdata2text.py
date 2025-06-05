@@ -5,8 +5,6 @@ import json
 import os
 import re
 
-import yaml
-import polars as pl
 
 parser = argparse.ArgumentParser(description="")
 
@@ -19,7 +17,7 @@ parser.add_argument("--import-path",
 
 args = parser.parse_args()
 
-def main(args:dict):
+def main(args: argparse.Namespace):
     if os.path.isdir(args.import_path) == False:
         raise ValueError("Illigal import path")
 
@@ -172,34 +170,11 @@ def main(args:dict):
 
     #/////////////////////////////////////////////////////////////////////////
 
-    #filename = "items.json"
-    #print("export :", filename)
-    #with open(os.path.abspath(filename), "w", encoding="utf-8") as fp:
-    #    json.dump(items, fp, sort_keys=True, ensure_ascii=False, indent=4)
-
-    filename = "items.jsonl"
+    filename = "items.json"
     print("export :", filename)
-    records = []
-    for key, value in items.items():
-        value = value.copy()
-        value["id"] = int(key)
-        records.append(value)
-    schema: dict = {
-        "id": pl.Int32,
-        "displayname": pl.Utf8,
-        "description": pl.Utf8,
-        "is_card": pl.Boolean,
-        "is_enchant": pl.Boolean,
-        "resname": pl.Utf8,
-        "type": pl.Utf8,  # None or str
-    }
-    df = pl.from_dicts(records, schema=schema).sort("id")
-    df.write_ndjson(filename)
+    with open(os.path.abspath(filename), "w", encoding="utf-8") as fp:
+        json.dump(items, fp, sort_keys=True, ensure_ascii=False, indent=4)
 
-    #filename = "items.yaml"
-    #print("export :", filename)
-    #with open(os.path.abspath(filename), "w", encoding="utf-8") as fp:
-    #    yaml.dump(items, fp, sort_keys=True, allow_unicode=True, indent=4)
 
 if __name__ == "__main__":
     main(args)

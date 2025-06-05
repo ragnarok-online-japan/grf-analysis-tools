@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.13
 
 import argparse
+import json
 import os
 
 from luaparser import ast, astnodes
@@ -17,7 +18,7 @@ parser.add_argument("--import-path",
 
 args = parser.parse_args()
 
-def main(args:dict):
+def main(args: argparse.Namespace):
     skill_dict: dict = {}
 
     ###############################################################################################
@@ -29,18 +30,18 @@ def main(args:dict):
 
     tree = ast.parse(lua_data)
 
-    for skill_field in tree.body.body[0].values[0].fields:
+    for skill_field in tree.body.body[0].values[0].fields: # type: ignore
         if isinstance(skill_field, astnodes.Field):
-            skill_id: str = skill_field.key.idx.id
-            skill_name: str = None
+            skill_id: str = skill_field.key.idx.id # type: ignore
+            skill_name: str|None = None
             skill_max_lv: int = 0
-            skill_type: str = None
+            skill_type: str|None = None
             skill_seperate_lv: bool = False
-            sp_amount: dict[int] = {}
-            attack_range: dict[int] = {}
-            need_skill_list: list[dict] = []
+            sp_amount: dict = {}
+            attack_range: dict = {}
+            need_skill_list: list = []
 
-            for data in skill_field.value.fields:
+            for data in skill_field.value.fields: # type: ignore
                 #print(ast.to_pretty_str(data)) # trace code
 
                 if isinstance(data.key, astnodes.Name) == False:
@@ -89,10 +90,10 @@ def main(args:dict):
 
     tree = ast.parse(lua_data)
 
-    for skill_field in tree.body.body[0].values[0].fields:
+    for skill_field in tree.body.body[0].values[0].fields: # type: ignore
         if isinstance(skill_field, astnodes.Field):
-            skill_id: str = skill_field.key.id
-            skill_id_num: int = skill_field.value.n
+            skill_id: str = skill_field.key.id # type: ignore
+            skill_id_num: int = skill_field.value.n # type: ignore
 
             if skill_id not in skill_dict:
                 skill_dict[skill_id] = {}
@@ -101,7 +102,7 @@ def main(args:dict):
 
     ###############################################################################################
 
-    filename = "skills.jsonl"
+    filename = "skills.json"
     print("export :", filename)
     records = []
     utf8_fields = {"id", "name", "type", "sp_amount", "attack_range", "need_skill_list"}
@@ -115,8 +116,9 @@ def main(args:dict):
                 elif not isinstance(value[field], str):
                      value[field] = str(value[field])
         records.append(value)
-    df = pl.from_dicts(records).sort("id_num")
-    df.write_ndjson(filename)
+
+    with open(os.path.abspath(filename), "w", encoding="utf-8") as fp:
+        json.dump(records, fp, sort_keys=True, ensure_ascii=False, indent=4)
 
 if __name__ == "__main__":
     main(args)
