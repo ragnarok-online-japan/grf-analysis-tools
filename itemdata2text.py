@@ -1,9 +1,10 @@
 #!/usr/bin/env python3.13
 
 import argparse
-import json
 import os
 import re
+
+import yaml
 
 
 parser = argparse.ArgumentParser(description="")
@@ -16,6 +17,16 @@ parser.add_argument("--import-path",
                     help="import path")
 
 args = parser.parse_args()
+
+def represent_str(dumper, instance):
+    if "\n" in instance:
+        instance = re.sub(' +\n| +$', '\n', instance)
+        return dumper.represent_scalar('tag:yaml.org,2002:str',
+                                       instance,
+                                       style='|')
+    else:
+        return dumper.represent_scalar('tag:yaml.org,2002:str',
+                                       instance)
 
 def main(args: argparse.Namespace):
     if os.path.isdir(args.import_path) == False:
@@ -170,11 +181,16 @@ def main(args: argparse.Namespace):
 
     #/////////////////////////////////////////////////////////////////////////
 
-    filename = "items.json"
-    print("export :", filename)
-    with open(os.path.abspath(filename), "w", encoding="utf-8") as fp:
-        json.dump(items, fp, sort_keys=True, ensure_ascii=False, indent=4)
+    #filename = "item.jsonc"
+    #print("export :", filename)
+    #with open(os.path.abspath(filename), "w", encoding="utf-8") as fp:
+    #    json.dump(items, fp, sort_keys=True, ensure_ascii=False, indent=4)
 
+    filename = "item.yaml"
+    print("export :", filename)
+    yaml.add_representer(str, represent_str)
+    with open(os.path.abspath(filename), "w", encoding="utf-8") as fp:
+        yaml.dump(items, fp, encoding='utf8', allow_unicode=True)
 
 if __name__ == "__main__":
     main(args)

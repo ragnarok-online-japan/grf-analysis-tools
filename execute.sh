@@ -1,10 +1,11 @@
 #!/bin/bash
 cd /opt/grf-analysis-tools
 
+cp -p item.yaml item.old.yaml
+
 ./export_grf2text.py --grf-path ../grf-files/data.grf
 
 ./itemdata2text.py
-cp -p items.json /var/www/html/ROOD/
 
 ./itemdata2gas.py
 

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3.13
 
 import argparse
-import json
 import os
 
+import yaml
 from luaparser import ast, astnodes
 import polars as pl
 
@@ -59,7 +59,7 @@ def main(args: argparse.Namespace):
 
     ###############################################################################################
 
-    filename = "jobname.json"
+    filename = "jobname.yaml"
     print("export :", filename)
     records = []
     utf8_fields = {"id", "name"}
@@ -74,7 +74,7 @@ def main(args: argparse.Namespace):
         records.append(value)
 
     with open(os.path.abspath(filename), "w", encoding="utf-8") as fp:
-        json.dump(records, fp, sort_keys=True, ensure_ascii=False, indent=4)
+        yaml.dump(records, fp, encoding='utf8', allow_unicode=True)
 
 if __name__ == "__main__":
     main(args)

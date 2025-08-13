@@ -4,21 +4,21 @@
 
 import argparse
 import io
-import json
 import os
 import traceback
 
+import yaml
 import requests
 from PIL import Image, ImageDraw, ImageFont
 
 parser = argparse.ArgumentParser(description='')
 
-parser.add_argument('--import-items',
+parser.add_argument('--import-item',
                     action='store',
                     nargs='?',
-                    default='./items.json',
+                    default='./item.yaml',
                     type=str,
-                    help='import items.json')
+                    help='import item.yaml')
 
 parser.add_argument('--export-path-org',
                     action='store',
@@ -99,8 +99,8 @@ def download(args: dict, key: int, font: ImageFont):
 
 def main(args: dict):
     items = {}
-    with open(args.import_items, "r", encoding="utf-8") as fp:
-        items = json.load(fp)
+    with open(args.import_item, "r", encoding="utf-8") as fp:
+        items = yaml.safe_load(fp)
 
     if os.path.isdir(args.export_path_org) == False:
         os.mkdir(args.export_path_org)
