@@ -3,7 +3,7 @@
 import argparse
 import os
 import re
-
+import json
 import yaml
 
 
@@ -181,10 +181,10 @@ def main(args: argparse.Namespace):
 
     #/////////////////////////////////////////////////////////////////////////
 
-    #filename = "item.jsonc"
-    #print("export :", filename)
-    #with open(os.path.abspath(filename), "w", encoding="utf-8") as fp:
-    #    json.dump(items, fp, sort_keys=True, ensure_ascii=False, indent=4)
+    filename = "item.json"
+    print("export :", filename)
+    with open(os.path.abspath(filename), "w", encoding="utf-8") as fp:
+        json.dump(items, fp, sort_keys=True, ensure_ascii=False, indent=4)
 
     filename = "item.yaml"
     print("export :", filename)
