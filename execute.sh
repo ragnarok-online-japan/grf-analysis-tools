@@ -11,6 +11,6 @@ cp -p item.yaml item.old.yaml
 
 ./jobname.sh
 
-./skills.sh
+./skill.sh
 
 ./export_grf2itemimg.py --grf-path ../grf-files/data.grf --export-path-imgdir /var/www/html/ROOD/items/
